@@ -8,7 +8,7 @@ const taskrouterClient = new twilio.TaskRouterClient(
 	process.env.TWILIO_AUTH_TOKEN,
 	process.env.TWILIO_WORKSPACE_SID)
 
-module.exports.spamFilter = function (req, res) {
+module.exports.inbound = function (req, res) {
 	/* set default team */
 	var team = req.configuration.ivr.options[0]
 

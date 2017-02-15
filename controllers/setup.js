@@ -248,7 +248,8 @@ module.exports.createOrUpdateApplication = function (configuration, req, callbac
 }
 
 module.exports.updateInboundPhoneNumber = function (req, config, callback) {
-	var voiceUrl 	=  req.protocol + '://' + req.hostname + '/api/ivr/welcome'
+	//var voiceUrl 	=  req.protocol + '://' + req.hostname + '/api/ivr/welcome'
+	var voiceUrl 	=  req.protocol + '://' + req.hostname + '/api/spam-filter/inbound'
 	var smsUrl 		=  req.protocol + '://' + req.hostname + '/api/messaging-adapter/inbound'
 
 	// if no call sid was provided, skip phone number configuration

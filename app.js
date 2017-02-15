@@ -72,9 +72,9 @@ router.route('/agents/session').get(agents.getSession)
 router.route('/agents/call').get(agents.call)
 
 /* routes for spam filter */
-var filter = require('./controllers/spam-filter.js')
+var spamFilter = require('./controllers/spam-filter.js')
 
-router.route('/filter').get(filter.spamFilter)
+router.route('/spam-filter').get(spamFilter.inbound)
 
 /* routes for IVR */
 var ivr = require('./controllers/ivr.js')
