@@ -74,7 +74,9 @@ router.route('/agents/call').get(agents.call)
 /* routes for spam filter */
 var spamFilter = require('./controllers/spam-filter.js')
 
-router.route('/spam-filter').get(spamFilter.inbound)
+router.route('/spam-filter/inbound').get(spamFilter.inbound)
+router.route('/spam-filter/ivr').get(spamFilter.ivr)
+router.route('/spam-filter/select-option').get(spamFilter.selectOption)
 
 /* routes for IVR */
 var ivr = require('./controllers/ivr.js')

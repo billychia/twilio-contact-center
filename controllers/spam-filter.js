@@ -14,15 +14,6 @@ module.exports.inbound = function (req, res) {
 
 	var twiml = new twilio.TwimlResponse()
 
-	twiml.gather({
-		action: 'create-task?teamId=' + team.id + '&teamFriendlyName=' + encodeURIComponent(team.friendlyName),
-		method: 'GET',
-		numDigits: 1,
-		timeout: 5
-	}, function (node) {
-		node.say('Press any key if you want a callback, if you want to talk to an agent please wait on the line')
-	})
-
 	/* create task attributes */
 	var attributes = {
 		text: 'Call routed through spam filter to "' + team.friendlyName + '"',
@@ -46,36 +37,63 @@ module.exports.inbound = function (req, res) {
 	res.send(twiml.toString())
 }
 
-module.exports.createTask = function (req, res) {
-	/* create task attributes */
-	var attributes = {
-		text: 'Call routed through spam filter to "' + req.query.teamFriendlyName + '"',
-		channel: 'phone',
-		phone: req.query.From,
-		name: req.query.From,
-		title: 'Callback request',
-		type: 'callback_request',
-		team: req.query.teamId
-	}
 
-	taskrouterClient.workspace.tasks.create({
-		WorkflowSid: req.configuration.twilio.workflowSid,
-		attributes: JSON.stringify(attributes)
-	}, function (err, task) {
+module.exports.ivr = function (req, res) {
+	var twiml = new twilio.TwimlResponse()
 
-		var twiml = new twilio.TwimlResponse()
-
-		if (err) {
-			console.log(err)
-			twiml.say('An application error occured, the demo ends now')
-		}  else {
-			twiml.say('Thanks for your callback request, an agent will call you back a soon as possible')
-			twiml.hangup()
-		}
-
-		res.setHeader('Content-Type', 'application/xml')
-		res.setHeader('Cache-Control', 'public, max-age=0')
-		res.send(twiml.toString())
+	twiml.gather({
+		action: 'select-option',
+		method: 'GET',
+		numDigits: 1,
+		timeout: 10
+	}, function (node) {
+		node.say("Press 1 if you want to talk to an agent, Press 2 if you want a callback")
 	})
 
+	res.setHeader('Content-Type', 'application/xml')
+	res.setHeader('Cache-Control', 'public, max-age=0')
+	res.send(twiml.toString())
+}
+
+module.exports.selectOption = function (req, res) {
+	var team = req.configuration.ivr.options[0]
+	var option = parseInt(req.query.Digits)
+
+	var twiml = new twilio.TwimlResponse()
+
+	/* the caller pressed a key that does not match an option */
+	if (option !== 1 || option !== 2) {
+	// redirect the call to the previous twiml
+		twiml.say('Your selection was not valid, please try again')
+		twiml.pause({length: 2})
+		twiml.redirect({ method: 'GET' }, 'ivr')
+	} else {
+		/* create task attributes */
+		var attributes = {
+			text: 'Caller answered IVR with option "' + team.friendlyName + '"',
+			channel: 'phone',
+			phone: req.query.From,
+			name: req.query.From,
+			title: 'Inbound call',
+			type: 'inbound_call',
+			team: team.id
+		}
+
+		// update a task's attributes
+		taskrouterClient.workspace.tasks(taskSid).update({
+		    	attributes: JSON.stringify(attributes)
+			}, function(err, task) {
+		    	console.log(task.attributes);
+				if (err) {
+					console.log(err)
+					twiml.say('An application error occured, the demo ends now')
+				}
+		});
+	}
+
+	twiml.say('you are a dirty spammer')
+	twiml.hangup()
+	res.setHeader('Content-Type', 'application/xml')
+	res.setHeader('Cache-Control', 'public, max-age=0')
+	res.send(twiml.toString())
 }

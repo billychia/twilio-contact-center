@@ -49,7 +49,7 @@ module.exports.login = function (req, res) {
 					{ ttl: lifetime })
 
 				accessToken.identity = worker.friendlyName
-				
+
 				/* grant the access token Twilio Programmable Chat capabilities */
 				var chatGrant = new twilio.AccessToken.IpMessagingGrant({
 					serviceSid: process.env.TWILIO_CHAT_SERVICE_SID,
