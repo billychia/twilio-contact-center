@@ -3,12 +3,12 @@
 module.exports.assignment = function (req, res) {
 	res.setHeader('Content-Type', 'application/json')
 	res.setHeader('Cache-Control', 'public, max-age=0')
-	if (req.body.TaskQueueSid === 'WQf4928f98b7083176a9920b4a397d3c78') {
+	if (req.body.TaskQueueSid === 'WQda51d7c3d837b4cb954e3ea38a492f1b') {
 		var taskAttributes = JSON.parse(req.body.TaskAttributes)
 		var responseAttributes = {
   			"instruction": "redirect",
 			"call_sid": taskAttributes.call_sid,
-			"url": "/ivr/welcome",
+			"url": "/spam-filter/ivr",
 		}
 		console.log('we have a match', JSON.parse(req.body.TaskAttributes).call_sid)
 		//res.send(JSON.stringify({ }, null, 3))

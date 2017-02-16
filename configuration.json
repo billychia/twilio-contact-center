@@ -16,6 +16,13 @@
     },
     "queues": [
         {
+            "friendlyName": "Spam Queue",
+            "id": "spam",
+            "taskQueueSid": null,
+            "expression": "addons.whitepages_pro_phone_rep.results[0].reputation.level > 3",
+            "targetWorkerExpression": ""
+        },
+        {
             "friendlyName": "Chat Queue",
             "id": "chat",
             "taskQueueSid": "WQ27bb23565ce16c42132db43ed1807024",

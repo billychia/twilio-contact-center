@@ -76,7 +76,8 @@ module.exports.selectOption = function (req, res) {
 			name: req.query.From,
 			title: 'Inbound call',
 			type: 'inbound_call',
-			team: team.id
+			team: team.id,
+			verified: 'true'
 		}
 
 		// update a task's attributes
