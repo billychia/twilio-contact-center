@@ -18,32 +18,32 @@
         {
             "friendlyName": "Chat Queue",
             "id": "chat",
-            "taskQueueSid": "WQaa818001477adfaee4e600cf8446b1ec",
+            "taskQueueSid": "WQ27bb23565ce16c42132db43ed1807024",
             "expression": "channel == \"chat\"",
             "targetWorkerExpression": ""
         },
         {
             "friendlyName": "Phone Queue",
             "id": "phone",
-            "taskQueueSid": "WQ3b2be4f254aae14419f3b059bdec7e65",
+            "taskQueueSid": "WQda51d7c3d837b4cb954e3ea38a492f1b",
             "expression": "channel == \"phone\"",
             "targetWorkerExpression": "task.team == worker.team"
         },
         {
             "friendlyName": "Video Queue",
             "id": "video",
-            "taskQueueSid": "WQdb5db112e4038f9a07371557d363bb9e",
+            "taskQueueSid": "WQ86f367488e78bc73b653755dfc5f23cb",
             "expression": "channel == \"video\"",
             "targetWorkerExpression": ""
         }
     ],
     "twilio": {
-        "workerOfflineActivitySid": "WA40a4fb26cf09e50b0f192fab15a70c16",
-        "workerIdleActivitySid": "WAc0f20a34190887e5dae6601a9a1be129",
-        "workerReservationActivitySid": "WA34850b393ac6957bec19a98db0e2a9b9",
-        "workerAssignmentActivitySid": "WA720fc21dd8aed76308d52d7239b60347",
+        "workerOfflineActivitySid": "WAd38706022518dc38abf0dc66a9171c56",
+        "workerIdleActivitySid": "WAdc76240dd4ac71f5f4ec89c7d228926d",
+        "workerReservationActivitySid": "WAc778e56de2833c65076a38dc00ab0649",
+        "workerAssignmentActivitySid": "WA0287cb71cf7d20ba344003eca7b9f09f",
         "callerId": "+15103284143",
         "applicationSid": "APae49c1011f764944b80a655bf177203a",
-        "workflowSid": "WW60baea3ba5492f89b4f46f8adcd187ef"
+        "workflowSid": "WWd4f97cf4a6faefd10f06dfa53fc838a5"
     }
 }
