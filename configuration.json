@@ -1,46 +1,49 @@
 {
-	"ivr": {
-		"text": "Welcome to my call center, please press 1 for sales, press 2 for support",
-		"options": [
-			{
-				"friendlyName": "Sales",
-				"digit": 1,
-				"id": "sales"
-			},
-			{
-				"friendlyName": "Support",
-				"digit": 2,
-				"id": "support"
-			}
-		]
-	},
-	"queues": [
-		{
-			"friendlyName": "Chat Queue",
-			"id": "chat",
-			"taskQueueSid": null,
-			"expression": "channel == \"chat\"",
-			"targetWorkerExpression": ""
-		},
-		{
-			"friendlyName": "Phone Queue",
-			"id": "phone",
-			"taskQueueSid": null,
-			"expression": "channel == \"phone\"",
-			"targetWorkerExpression": "task.team == worker.team"
-		},
-		{
-			"friendlyName": "Video Queue",
-			"id": "video",
-			"taskQueueSid": null,
-			"expression": "channel == \"video\"",
-			"targetWorkerExpression": ""
-		}
-	],
-	"twilio": {
-		"workerOfflineActivitySid": null,
-		"workerIdleActivitySid": null,
-		"workerReservationActivitySid": null,
-		"workerAssignmentActivitySid": null
-	}
+    "ivr": {
+        "text": "Welcome to my call center, please press 1 for sales, press 2 for support",
+        "options": [
+            {
+                "friendlyName": "Sales",
+                "digit": 1,
+                "id": "sales"
+            },
+            {
+                "friendlyName": "Support",
+                "digit": 2,
+                "id": "support"
+            }
+        ]
+    },
+    "queues": [
+        {
+            "friendlyName": "Chat Queue",
+            "id": "chat",
+            "taskQueueSid": "WQ27bb23565ce16c42132db43ed1807024",
+            "expression": "channel == \"chat\"",
+            "targetWorkerExpression": ""
+        },
+        {
+            "friendlyName": "Phone Queue",
+            "id": "phone",
+            "taskQueueSid": "WQda51d7c3d837b4cb954e3ea38a492f1b",
+            "expression": "channel == \"phone\"",
+            "targetWorkerExpression": "task.team == worker.team"
+        },
+        {
+            "friendlyName": "Video Queue",
+            "id": "video",
+            "taskQueueSid": "WQ86f367488e78bc73b653755dfc5f23cb",
+            "expression": "channel == \"video\"",
+            "targetWorkerExpression": ""
+        }
+    ],
+    "twilio": {
+        "workerOfflineActivitySid": "WAd38706022518dc38abf0dc66a9171c56",
+        "workerIdleActivitySid": "WAdc76240dd4ac71f5f4ec89c7d228926d",
+        "workerReservationActivitySid": "WAc778e56de2833c65076a38dc00ab0649",
+        "workerAssignmentActivitySid": "WA0287cb71cf7d20ba344003eca7b9f09f",
+        "callerId": "+15103284143",
+        "applicationSid": "AP9bd5dae6986f472a864f096e21189958",
+        "workflowSid": "WWd4f97cf4a6faefd10f06dfa53fc838a5"
+    }
 }
