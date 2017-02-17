@@ -30,6 +30,44 @@ module.exports.createCallback = function (req, res) {
 
 }
 
+module.exports.createTask = function (req, res, attributes) {
+	console.log('creating task')
+	// update a task's attributes
+	taskrouterClient.workspace.tasks.create(
+		attributes,
+		function(err, task) {
+			console.log(task.attributes);
+			if (err) {
+				console.log(err)
+			}
+	});
+}
+
+module.exports.updateWorker = function (req, res, params) {
+	console.log('updating worker')
+	taskrouterClient.workspace.workers(req.body.WorkerSid).update(
+		params,
+		function(err, worker) {
+			if (err) {
+				console.log('worker error', err)
+			}
+	})
+}
+
+module.exports.updateTask = function (req, res, params) {
+	console.log('updating task')
+	taskrouterClient.workspace.tasks(req.body.taskSid).update(
+		params,
+		function(err, task) {
+			if (task) { // updating task to 'complete' results in undefinted task
+				if (err) {
+					console.log( "task error", err)
+				}
+			}
+		}
+	)
+}
+
 module.exports.createChat = function (req, res) {
 	/* create a chat room */
 	async.waterfall([

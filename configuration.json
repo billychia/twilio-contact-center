@@ -18,39 +18,39 @@
         {
             "friendlyName": "Spam Queue",
             "id": "spam",
-            "taskQueueSid": null,
+            "taskQueueSid": "WQ2a26c93efbec4e322de39f535f4c5eb1",
             "expression": "addons.whitepages_pro_phone_rep.results[0].reputation.level > 3",
             "targetWorkerExpression": ""
         },
         {
             "friendlyName": "Chat Queue",
             "id": "chat",
-            "taskQueueSid": "WQ27bb23565ce16c42132db43ed1807024",
+            "taskQueueSid": "WQ39e5a97002b7915ecd54b33d92d0f819",
             "expression": "channel == \"chat\"",
             "targetWorkerExpression": ""
         },
         {
             "friendlyName": "Phone Queue",
             "id": "phone",
-            "taskQueueSid": "WQda51d7c3d837b4cb954e3ea38a492f1b",
+            "taskQueueSid": "WQ031aa809726cfb010bf2559154389881",
             "expression": "channel == \"phone\"",
             "targetWorkerExpression": "task.team == worker.team"
         },
         {
             "friendlyName": "Video Queue",
             "id": "video",
-            "taskQueueSid": "WQ86f367488e78bc73b653755dfc5f23cb",
+            "taskQueueSid": "WQce46d0635a83c559548ca3ed74a5a963",
             "expression": "channel == \"video\"",
             "targetWorkerExpression": ""
         }
     ],
     "twilio": {
-        "workerOfflineActivitySid": "WAd38706022518dc38abf0dc66a9171c56",
-        "workerIdleActivitySid": "WAdc76240dd4ac71f5f4ec89c7d228926d",
-        "workerReservationActivitySid": "WAc778e56de2833c65076a38dc00ab0649",
-        "workerAssignmentActivitySid": "WA0287cb71cf7d20ba344003eca7b9f09f",
+        "workerOfflineActivitySid": "WA130ca2fac4c5f92b63877fe8bdfc44ee",
+        "workerIdleActivitySid": "WA0a3b16fd944327c1c4c0671ae301cb8a",
+        "workerReservationActivitySid": "WAf7296faf4864266b48bfca6a6fcc818d",
+        "workerAssignmentActivitySid": "WA2754e2ee9228f1982b6c88b88f36d32e",
         "callerId": "+15103284143",
         "applicationSid": "APae49c1011f764944b80a655bf177203a",
-        "workflowSid": "WWd4f97cf4a6faefd10f06dfa53fc838a5"
+        "workflowSid": "WWb66f211003d2db6c56681dc75ca50ff7"
     }
 }

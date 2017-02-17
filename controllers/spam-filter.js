@@ -1,12 +1,7 @@
 'use strict'
 
-const twilio = require('twilio')
-
-/* client for Twilio TaskRouter */
-const taskrouterClient = new twilio.TaskRouterClient(
-	process.env.TWILIO_ACCOUNT_SID,
-	process.env.TWILIO_AUTH_TOKEN,
-	process.env.TWILIO_WORKSPACE_SID)
+var twilio = require('twilio')
+var tasks = require('./tasks.js')
 
 module.exports.inbound = function (req, res) {
 	/* set default team */
@@ -37,13 +32,12 @@ module.exports.inbound = function (req, res) {
 	res.send(twiml.toString())
 }
 
-
 module.exports.ivr = function (req, res) {
 	var twiml = new twilio.TwimlResponse()
 
 	twiml.gather({
 		action: 'select-option',
-		method: 'GET',
+		method: 'POST',
 		numDigits: 1,
 		timeout: 10
 	}, function (node) {
@@ -56,45 +50,70 @@ module.exports.ivr = function (req, res) {
 }
 
 module.exports.selectOption = function (req, res) {
-	var team = req.configuration.ivr.options[0]
-	var option = parseInt(req.query.Digits)
-
+	//console.log('select option req = ', req)
 	var twiml = new twilio.TwimlResponse()
+	var selectedOption = parseInt(req.body.Digits)
+	var optionActions = {
+        "1": talkToAnAgent,
+        "2": requestCallback
+    }
 
-	/* the caller pressed a key that does not match an option */
-	if (option !== 1 || option !== 2) {
-	// redirect the call to the previous twiml
-		twiml.say('Your selection was not valid, please try again')
-		twiml.pause({length: 2})
-		twiml.redirect({ method: 'GET' }, 'ivr')
-	} else {
+    if (optionActions[selectedOption]) {
+		var team = req.configuration.ivr.options[0]
 		/* create task attributes */
 		var attributes = {
-			text: 'Caller answered IVR with option "' + team.friendlyName + '"',
+			text: 'Caller answered spam IVR with talk to an agent',
 			channel: 'phone',
-			phone: req.query.From,
-			name: req.query.From,
+			phone: req.body.From,
+			name: req.body.From,
 			title: 'Inbound call',
 			type: 'inbound_call',
 			team: team.id,
-			verified: 'true'
+			verified: true
 		}
 
-		// update a task's attributes
-		taskrouterClient.workspace.tasks(taskSid).update({
-		    	attributes: JSON.stringify(attributes)
-			}, function(err, task) {
-		    	console.log(task.attributes);
-				if (err) {
-					console.log(err)
-					twiml.say('An application error occured, the demo ends now')
-				}
-		});
+		twiml.enqueue({ workflowSid: req.configuration.twilio.workflowSid }, function (node) {
+			node.task(JSON.stringify(attributes), {
+				priority: 1,
+				timeout: 3600
+			})
+		})
+
+		//tasks.createTask(req, res, attributes)
+
+        //optionActions[selectedOption](req, res, twiml)
+		res.setHeader('Content-Type', 'application/xml')
+		res.setHeader('Cache-Control', 'public, max-age=0')
+		res.send(twiml.toString())
+    }
+    res.send(redirectInvalid(twiml))
+}
+
+var redirectInvalid = function (twiml) {
+	twiml.say('Your selection was not valid, please try again')
+	twiml.pause({length: 2})
+	twiml.redirect({ method: 'POST' }, 'ivr')
+}
+
+var talkToAnAgent = function (req, res, twiml) {
+	var team = req.configuration.ivr.options[0]
+	/* create task attributes */
+	var attributes = {
+		text: 'Caller answered spam IVR with talk to an agent',
+		channel: 'phone',
+		phone: req.query.From,
+		name: req.query.From,
+		title: 'Inbound call',
+		type: 'inbound_call',
+		team: team.id,
+		verified: 'true'
 	}
 
-	twiml.say('you are a dirty spammer')
-	twiml.hangup()
-	res.setHeader('Content-Type', 'application/xml')
-	res.setHeader('Cache-Control', 'public, max-age=0')
-	res.send(twiml.toString())
+	task.createTask(req, res, attributes)
+
+	return twiml
+}
+
+var requestCallback = function (twiml) {
+	return twiml
 }

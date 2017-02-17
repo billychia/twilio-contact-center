@@ -75,8 +75,8 @@ router.route('/agents/call').get(agents.call)
 var spamFilter = require('./controllers/spam-filter.js')
 
 router.route('/spam-filter/inbound').get(spamFilter.inbound)
-router.route('/spam-filter/ivr').get(spamFilter.ivr)
-router.route('/spam-filter/select-option').get(spamFilter.selectOption)
+router.route('/spam-filter/ivr').post(spamFilter.ivr)
+router.route('/spam-filter/select-option').post(spamFilter.selectOption)
 
 /* routes for IVR */
 var ivr = require('./controllers/ivr.js')
@@ -89,6 +89,7 @@ router.route('/ivr/create-task').get(ivr.createTask)
 var taskrouter = require('./controllers/taskrouter.js')
 
 router.route('/taskrouter/assignment').post(taskrouter.assignment)
+router.route('/taskrouter/event').post(taskrouter.event)
 
 var workers = require('./controllers/workers.js')
 
